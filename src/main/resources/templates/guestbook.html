@@ -37,6 +37,10 @@
 					</div>
 					<div class="card-footer">
 						<footer class="date" th:text="${#temporals.format(entry.date, 'dd. MMMM yyyy - HH:mm')}">Datum</footer>
+						<button>
+							<span>&#128077;</span>
+							<span type="submit" class="btn btn-sm" th:text="${entry.likeNumber}"></span>
+						</button>
 					</div>
 				</div>
 			</div>
