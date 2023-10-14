@@ -36,6 +36,7 @@ class GuestbookEntry {
 	private @Id @GeneratedValue Long id;
 	private final String name, text;
 	private final LocalDateTime date;
+	private final String email;
 	private int likeNumber;
 
 	/**
@@ -44,13 +45,15 @@ class GuestbookEntry {
 	 * @param name must not be {@literal null} or empty
 	 * @param text must not be {@literal null} or empty
 	 */
-	public GuestbookEntry(String name, String text) {
+	public GuestbookEntry(String name, String text, String email) {
 
 		Assert.hasText(name, "Name must not be null or empty!");
 		Assert.hasText(text, "Text must not be null or empty!");
+		Assert.hasText(text, "Email must not be null or empty!");
 
 		this.name = name;
 		this.text = text;
+		this.email = email;
 		this.date = LocalDateTime.now();
 		this.likeNumber = 0;
 	}
@@ -59,7 +62,9 @@ class GuestbookEntry {
 	private GuestbookEntry() {
 		this.name = null;
 		this.text = null;
+		this.email = null;
 		this.date = null;
+		this.likeNumber = 0;
 	}
 
 	public String getName() {
@@ -69,6 +74,7 @@ class GuestbookEntry {
 	public Long getId() {
 		return id;
 	}
+	public String getEmail(){return email;}
 
 	public LocalDateTime getDate() {
 		return date;
@@ -78,4 +84,8 @@ class GuestbookEntry {
 		return text;
 	}
 	public int getLikeNumber(){return likeNumber;}
+
+	public int addOneLike(){
+		return likeNumber++;
+	}
 }
