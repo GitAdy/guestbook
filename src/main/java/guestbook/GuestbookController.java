@@ -16,13 +16,11 @@
 package guestbook;
 
 import io.github.wimdeblauwe.hsbt.mvc.HtmxResponse;
-import io.github.wimdeblauwe.hsbt.mvc.HxRefresh;
 import io.github.wimdeblauwe.hsbt.mvc.HxRequest;
 import jakarta.validation.Valid;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -31,6 +29,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * A controller to handle web requests to manage {@link GuestbookEntry}s
@@ -178,20 +177,23 @@ class GuestbookController {
 		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
-	/*@HxRequest
-	@PostMapping(path="/addLike/{id}(id=${entry.id})")
-	public int addLike(@PathVariable Long entryId) {
-		Optional<GuestbookEntry> entry = guestbook.findById(entryId);
-		entry.get().addOneLike();
-		guestbook.save(entry.get());
-		return entry.get().getLikeNumber();
-	}*/
-}
-/*
-	public int addLike(@PathVariable Long entryId) {
-		Optional<GuestbookEntry> entry = guestbook.findById(entryId);
-		entry.get().addOneLike();
-		guestbook.save(entry.get());
-		return entry.get().getLikeNumber();
+	@PostMapping(path="/guestbook/addLike/{entry}")
+	String addLike(@PathVariable GuestbookEntry entry) {
+		entry.addOneLike();
+		guestbook.save(entry);
+		return "redirect:/guestbook";
 	}
-*/
+
+	@HxRequest
+	@PostMapping(path="/guestbook/addLike/{entry}")
+	HtmxResponse addLikeHtmx(@PathVariable GuestbookEntry entry, Model model) {
+		entry.addOneLike();
+		guestbook.save(entry);
+		model.addAttribute("likeNumber", entry.getLikeNumber());
+		return new HtmxResponse().addTemplate("guestbook :: likes");
+	}
+
+}
+
+
+

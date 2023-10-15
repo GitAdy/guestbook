@@ -39,11 +39,8 @@
 						<blockquote class="emailtext" th:text="${entry.email}"></blockquote>
 					</div>
 					<div class="card-footer">
-						<footer class="date" th:text="${#temporals.format(entry.date, 'dd. MMMM yyyy - HH:mm')}">D atum</footer>
-						<!--<button hx:post = "@{/addLike/{id}(id=${entry_id})}" hx:target = "likeNumber_{id}(id=${entry_id})">
-							Like
-						</button>
-						<span id="LikeNumber_{id}(id=${entry_id})" th:text="${entry.likeNumber}"> 0 </span> -->
+						<footer class="date" th:text="${#temporals.format(entry.date, 'dd. MMMM yyyy - HH:mm')}">Datum</footer>
+						<button type="button" hx:post="@{/guestbook/addLike/{id}(id=${entry.id})}" hx:swap="outerHTML" th:text="${entry.likeNumber} + ' Likes'" th:fragment="likes">0 Likes</button>
 					</div>
 				</div>
 			</div>

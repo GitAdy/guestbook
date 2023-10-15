@@ -37,7 +37,7 @@ class GuestbookEntry {
 	private final String name, text;
 	private final LocalDateTime date;
 	private final String email;
-	private int likeNumber;
+	private Long likeNumber;
 
 	/**
 	 * Creates a new {@link GuestbookEntry} for the given name and text.
@@ -55,7 +55,7 @@ class GuestbookEntry {
 		this.text = text;
 		this.email = email;
 		this.date = LocalDateTime.now();
-		this.likeNumber = 0;
+		this.likeNumber = 0L;
 	}
 
 	@SuppressWarnings("unused")
@@ -64,7 +64,7 @@ class GuestbookEntry {
 		this.text = null;
 		this.email = null;
 		this.date = null;
-		this.likeNumber = 0;
+		this.likeNumber = 0L;
 	}
 
 	public String getName() {
@@ -83,9 +83,9 @@ class GuestbookEntry {
 	public String getText() {
 		return text;
 	}
-	public int getLikeNumber(){return likeNumber;}
+	public Long getLikeNumber(){return likeNumber;}
 
-	public int addOneLike(){
-		return likeNumber++;
+	public void addOneLike(){
+		 likeNumber++;
 	}
 }
